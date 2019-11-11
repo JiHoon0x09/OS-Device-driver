@@ -1,0 +1,66 @@
+<<완성된 BSP에서 새로운 M2보드에  포팅하는 방법 >>
+
+===========================================================================================================
+arch/arm/mach-s3c2440/mach-mep2440.c        
+
+static struct map_desc mep2440_iodesc[] __initdata =
+{
+         {
+             .virtual    = (u32)S3C2440_VA_AC97,
+             .pfn        = __phys_to_pfn(S3C2440_PA_AC97),
+             .length     = S3C2440_SZ_AC97,
+             .type       = MT_DEVICE,
+         },
+};
+
+
+========================================================================================================
+include/asm-arm/arch-s3c2410/dma.h 
+
+    BSP에서 복사하여 사용(수정내용 분석 필요)
+    root@mdsedu-desktop:/work/BSP/linux-2.6.21-mep2440# cp -ra include/asm-arm/arch-s3c2410/dma.h /work/linux/linux-2.6.21.st_fin/include/asm-arm/arch-s3c2410/
+
+========================================================================================================
+include/asm-arm/arch-s3c2410/regs-ac97.h
+    BSP에서 복사하여 사용(수정내용 분석 필요)
+    root@mdsedu-desktop:/work/BSP/linux-2.6.21-mep2440# cp -ra include/asm-arm/arch-s3c2410/regs-ac97.h /work/linux/linux-2.6.21.st_fin/include/asm-arm/arch-s3c2410/
+
+========================================================================================================
+include/asm-arm/arch-s3c2410/bitfield.h
+    BSP에서 복사하여 사용(수정내용 분석 필요)
+    root@mdsedu-desktop:/work/BSP/linux-2.6.21-mep2440# cp -ra include/asm-arm/arch-s3c2410/bitfield.h /work/linux/linux-2.6.21.st_fin/include/asm-arm/arch-s3c2410/
+
+========================================================================================================
+include/asm-arm/arch-s3c2410/map.h 파일 수정
+    /* AC97 for S3C2440 */
+    #define S3C2440_VA_AC97    S3C2410_ADDR(0x01400000)
+    #define S3C2440_PA_AC97    (0x5B000000)
+    #define S3C2440_SZ_AC97    SZ_1M
+
+========================================================================================================
+root@mdsedu-desktop:/work/linux/linux-2.6.21/sound/oss# 
+    vim Makefile
+    obj-$(CONFIG_SOUND_AC97_MEP2440)    += s3c2440-audio.o s3c2440-ac97.o ac97_codec.o
+
+========================================================================================================
+vim Kconfig // 추가 
+config SOUND_AC97_MEP2440
+     tristate "S3C2440(mep2440) ac97 driver"
+     depends on SOUND && CPU_S3C2440 && ARCH_MEP2440
+     help
+         MDS technology, mep2440-alc203 ac97 sound driver
+
+=======================================================================================================
+make menuconfig 실행 
+
+  x x           <*> Sound card support                                                            x x
+  x x               Advanced Linux Sound Architecture  --->                                       x x
+  x x               Open Sound System  ---> 
+
+  x x           <*> Open Sound System (DEPRECATED)                                                x x
+  x x           <*> S3C2440(mep2440) ac97 driver                                                  x x
+  x x           [ ] Obsolete OSS drivers                                                          x x
+  x x           < > Support for Turtle Beach MultiSound Classic, Tahiti, Monterey                 x x
+  x x           < > Support for Turtle Beach MultiSound Pinnacle, Fiji 
+
+root@mdsedu-desktop:/work/linux/linux-2.6.21# make uImage

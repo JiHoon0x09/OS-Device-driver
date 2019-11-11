@@ -1,0 +1,117 @@
+<<완성된 BSP에서 새로운 M2보
+드에  포팅하는 방법 >>
+
+===========================================================================================================
+arch/arm/mach-s3c2440/mach-mep2440.c        
+
+static struct platform_device *mep2440_devices[] __initdata = {
+    &s3c_device_usb,
+    &s3c_device_lcd,
+    &s3c_device_wdt,
+    &s3c_device_i2c,
+    &s3c_device_sdi, //check by june90309
+    &s3c_device_iis,
+    &mep2440_dm9k0,
+    &s3c_device_nand,
+    &s3c_device_ts,
+};
+
+     // sdi interface
+     #include <linux/mmc/mmc.h>
+     #include <linux/mmc/protocol.h>
+     #include <asm/arch/regs-sdi.h>
+
+static struct s3c24xx_mmc_platdata mep2440_mmc_cfg = {
+     .gpio_detect   = S3C2410_GPF0, /* card detection interrupt --> Both edge active: low(inserted), high(ejected) */
+     .gpio_wprotect = S3C2410_GPH8, /* card write-protect read pin  */
+     .set_power     = NULL,
+     .ocr_avail     = MMC_VDD_32_33,
+};nit mep2440_map_io(void) 함수안에서 아래 라인을 추가...
+s3c_device_sdi.dev.platform_data  = &mep2440_mmc_cfg;
+
+
+
+==========================================================================================================
+arch/arm/plat-s3c24xx/devs.c
+
+/* SDI */  //check ...
+
+static struct resource s3c_sdi_resource[] = {
+    [0] = {
+        .start = S3C2410_PA_SDI,
+        .end   = S3C2410_PA_SDI + S3C24XX_SZ_SDI - 1,
+        .flags = IORESOURCE_MEM,
+    },
+    [1] = {
+        .start = IRQ_SDI,
+        .end   = IRQ_SDI,
+        .flags = IORESOURCE_IRQ,
+    }
+
+};
+
+struct platform_device s3c_device_sdi = {
+    .name         = "s3c2410-sdi",
+    .id       = -1,
+    .num_resources    = ARRAY_SIZE(s3c_sdi_resource),
+    .resource     = s3c_sdi_resource,
+};
+
+EXPORT_SYMBOL(s3c_device_sdi);
+
+
+========================================================================================================
+include/asm-arm/plat-s3c24xx/devs.h
+extern struct platform_device s3c_device_sdi; //---> 구현되어 있는지 확인 
+
+
+========================================================================================================
+완성되어 있는 BSP에서 s3c2440 sd 디바이스 드라이버 파일을 새롭게 만드는 BSP로 복사시킴
+root@mdsedu-desktop:/work/M2_BSP/linux-2.6.21-mep2440/drivers/mmc# ls
+Kconfig     au1xmmc.c  imxmmc.h  mmc_block.c  mmc_sysfs.c  omap.c    s3c2410mci.h  sdhci.h    wbsd.h
+Makefile    au1xmmc.h  mmc.c     mmc_queue.c  mmci.c       pxamci.c  s3c2440mci.c  tifm_sd.c
+at91_mci.c  imxmmc.c   mmc.h     mmc_queue.h  mmci.h       pxamci.h  sdhci.c       wbsd.c
+root@mdsedu-desktop:/work/M2_BSP/linux-2.6.21-mep2440/drivers/mmc# cp -a s3c2410mci.h s3c2440mci.c /work/linux/linux-2.6.21/drivers/mmc/
+
+========================================================================================================
+include/asm-arm/arch-s3c2410/regs-sdi.h
+파일을 완성된 BSP에서 복사(S3C2440의 SD레지스터는 S3C2410과 차이가 있음)
+root@mdsedu-desktop:/work/M2_BSP/linux-2.6.21-mep2440# cp -a include/asm-arm/arch-s3c2410/regs-sdi.h /work/linux/linux-2.6.21/include/asm-arm/arch-s3c2410/
+
+include/linux/mmc/mmc.h 
+//add by june90309
+#define MMC_ERR_BUSY    6
+#define MMC_ERR_DMA     7
+
+========================================================================================================
+root@mdsedu-desktop:/work/linux/linux-2.6.21/drivers/mmc# 
+vim Makefile
+obj-$(CONFIG_MMC_S3C2440)   += s3c2440mci.o 
+
+========================================================================================================
+vim Kconfig // 추가 
+
+config MMC_S3C2440
+    tristate "MEP2440 SD card support(no MMC)"
+    depends on CPU_S3C2440 && MMC
+    help
+      This selects the MDS technology MEP2440(Samsung S3C2440a) SD Card Interface
+      support.
+
+      If unsure, say N.
+
+=======================================================================================================
+make menuconfig 실행 
+  x x                             MMC/SD Card support  --->   
+
+  x x                         <*> MMC support                                                                                 x x
+  x x                         [ ]   MMC debugging                                                                             x x
+  x x                         <*>   MMC block device driver                                                                   x x
+  x x                         <*>   MEP2440 SD card support(no MMC)          
+
+File systems ---> 
+Native Language Support --->
+			<*> Codepage 437 (United Status, Canada)
+			<*> NLS ISO 8859-1 (Latin 1; Western European Languages)
+
+root@mdsedu-desktop:/work/linux/linux-2.6.21# make uImage

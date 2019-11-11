@@ -1,0 +1,18 @@
+font_8x16.o font_8x16.o: font_8x16.c font.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/linux/types.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/linux/posix_types.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/linux/stddef.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm/posix_types.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm/types.h
+
+font.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/linux/types.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/linux/posix_types.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/linux/stddef.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm/posix_types.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm/types.h:

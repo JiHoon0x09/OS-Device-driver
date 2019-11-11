@@ -1,0 +1,154 @@
+ts_print_raw.o ts_print_raw.o: ts_print_raw.c \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/stdio.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/features.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/cdefs.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wordsize.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gnu/stubs.h \
+  /opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stddef.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/types.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/typesizes.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/libio.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/_G_config.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/wchar.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wchar.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gconv.h \
+  /opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stdarg.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio_lim.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sys_errlist.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/stdlib.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/types.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/time.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/endian.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/endian.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/select.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/select.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigset.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/time.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/sysmacros.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/pthreadtypes.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/alloca.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/signal.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/signum.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/siginfo.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigaction.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigcontext.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm/sigcontext.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigstack.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigthread.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/fcntl.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/fcntl.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/fcntl.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/ioctl.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/ioctls.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm/ioctls.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm/ioctl.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm-generic/ioctl.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/ioctl-types.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/ttydefaults.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/mman.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/mman.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/time.h \
+  ../src/tslib.h
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/stdio.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/features.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/cdefs.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wordsize.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gnu/stubs.h:
+
+/opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stddef.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/types.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/typesizes.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/libio.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/_G_config.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/wchar.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wchar.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gconv.h:
+
+/opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stdarg.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio_lim.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sys_errlist.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/stdlib.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/types.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/time.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/endian.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/endian.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/select.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/select.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigset.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/time.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/sysmacros.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/pthreadtypes.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/alloca.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/signal.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/signum.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/siginfo.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigaction.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigcontext.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm/sigcontext.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigstack.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigthread.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/fcntl.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/fcntl.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/fcntl.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/ioctl.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/ioctls.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm/ioctls.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm/ioctl.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/asm-generic/ioctl.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/ioctl-types.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/ttydefaults.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/mman.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/mman.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/time.h:
+
+../src/tslib.h:

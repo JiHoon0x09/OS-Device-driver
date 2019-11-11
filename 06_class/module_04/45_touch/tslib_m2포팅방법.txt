@@ -1,0 +1,17 @@
+tar xzf tslib.tar.gz
+cd tslib
+
+./configure --prefix=/usr --enable-shared --enable-input --disable-corgi --disable-collie \
+--disable-mk712 --disable-arctic2 --disable-ucb1x00 --build=i386-linux \
+--host=arm-generic-linux-gnu
+
+make
+make prefix=/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr install
+
+rootfs의 /etc/profile
+여기서 device명은 알아서 맞춰줘서 넣을 것
+TSLIB_TSDEVICE=/dev/input/event0 (input디바이스의 개수에 따라 변경 가능)
+TSLIB_CONFFILE=/etc/tslib/ts.conf-input
+
+테스트는 보드 부팅 후
+ts_calibrate로 touch calibrate 한 후, ts_test로 하면 됨

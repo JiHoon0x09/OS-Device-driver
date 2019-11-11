@@ -1,0 +1,159 @@
+#include <fcntl.h>
+#include <stdio.h>
+#include <sys/ioctl.h>
+#include <linux/soundcard.h>
+#include <unistd.h>
+
+#define AUD_DEV     "/dev/dsp"       /* for PC LINUX */
+
+#define FORMAT_NUM 	8 
+		/* format_table로 설정되어 있는 사운드 포맷의 수 */
+#define CAPS_NUM 	7 /* caps_table로 설정되어 있는 기능의 수 */
+
+int main(int argc, char** argv)
+{
+    int fd;
+    int rate, channels;
+    int i, caps;
+    int bits, blksize;
+    int formats, default_format;
+    char* msgtbl[2] = { "o", "x" };
+    
+    int format_table[FORMAT_NUM] = { /* ref. open sound system programmer's guide */
+        AFMT_MU_LAW,   /* mu-law */
+        AFMT_A_LAW,    /* A-law  */
+        AFMT_U8,       /* unsigned 8 bit */
+        AFMT_S8,       /* signed 8 bit */
+        AFMT_S16_LE,   /* signed 16 bit, Little-endian */
+        AFMT_S16_BE,   /* signed 16 bit, big-endian */
+        AFMT_U16_LE,   /* unsigned 16 bit, Little-endian */
+        AFMT_U16_BE    /* unsigned 16 bit, big-endian */
+    };
+
+    char* format_msgtbl[FORMAT_NUM] = {
+        "mu-law",
+        "A-law",
+        "unsigned 8 bit",
+        "signed 8 bit",
+        "signed 16 bit, Little-endian",
+        "signed 16 bit, big-endian",
+        "unsigned 16 bit, Little-endian",
+        "unsigned 16 bit, big-endian"
+    };
+
+    int caps_table[CAPS_NUM] = {
+        DSP_CAP_REVISION,  /* 버전 */
+        DSP_CAP_DUPLEX,    /* 녹음 재생을 동시에 할 수 있다 */
+        DSP_CAP_REALTIME,  /* SNDCTL_DSP_GET[IO]PTR 을 사용하고 
+			                  재생중의 버퍼 위치를 정확하게 알 수 있다 */
+        DSP_CAP_BATCH,     /* 녹음 재생에 로컬 배치를 사용한다 */
+        DSP_CAP_COPROC,    /* codec은 아니고 DSP 팁이 존재한다 */
+        DSP_CAP_TRIGGER,   /* 녹음 재생의 triggering 가능 */
+        DSP_CAP_MMAP       /* 녹음 재생에 하드웨어의 버퍼 가능 */
+    };
+
+    char* caps_msgtbl[CAPS_NUM] = {
+        "revision   ",
+        "duplex     ",
+        "realtime   ",
+        "batch      ",
+        "coprocessor",
+        "trigger    ",
+        "mmap       "
+    };
+
+    if((fd = open(AUD_DEV, O_RDONLY)) == -1) {
+        perror("open()\n");
+        return -1;
+    }
+    
+    if(ioctl(fd, SOUND_PCM_READ_BITS, &bits) == -1) {
+        perror("ioctl( SOUND_PCM_READ_BITS )");
+        //return -1;
+    }
+    
+
+    /* /dev/dsp의 기본 패러미터를 가져온다 */
+
+    /* 샘플링 레이트 값을 가져온다 */
+    if(ioctl(fd, SOUND_PCM_READ_RATE, &rate) == -1) {
+        perror("ioctl(SOUND_PCM_READ_RATE )");
+        return -1;
+    }
+    printf("Sampling rate : %d Hz\n",      rate);
+
+    /* 채널수를 가져온다 */
+    if(ioctl(fd, SOUND_PCM_READ_CHANNELS, &channels) == -1) {
+        perror("ioctl(SOUND_PCM_READ_CHANNELS)");
+        return -1;
+    }
+    printf("Channels      : %d\n",         channels);
+
+    /* 양자화 비트를 가져온다 */
+    if(ioctl(fd, SOUND_PCM_READ_BITS, &bits) == -1) {
+        perror("ioctl( SOUND_PCM_READ_BITS )");
+        //return -1;
+    }
+    printf("Sample size   : %d bits\n",    bits );
+
+    /* 드라이버가 내부에 가지고 있는 버퍼의 블록 크기를 가져온다 */
+    // fragment size를 가져옴.
+    if(ioctl(fd, SNDCTL_DSP_GETBLKSIZE, &blksize) == -1) {
+        perror("ioctl(SNDCTL_DSP_GETBLKSIZE)");
+        //return -1;
+    }
+    printf("Block size    : %d bytes\n\n", blksize);
+
+    /* /dev/dsp의 기본 사운드 포맷 및 지원되고 있는 사운드 포맷을 조사한다 */
+
+    /* 기본 포맷 질의용으로 값을 설정 */
+    default_format = AFMT_QUERY;
+
+    /* 기본 사운드 포맷을 가져온다 */
+    if(ioctl(fd, SOUND_PCM_SETFMT, &default_format) == -1) {
+        perror("ioctl(SOUND_PCM_SETFMT)");
+        //return -1;
+    }
+
+    /* 지원되고 있는 포맷을 가져온다 */
+    if(ioctl(fd, SOUND_PCM_GETFMTS, &formats) == -1) {
+        perror("ioctl(SOUND_PCM_GETFMTS)");
+        //return -1;
+    }
+
+    printf("Supported formats\n");
+
+    /* 가져온 포맷 정보를 해석해서 표시한다 */
+    for(i = 0; i < FORMAT_NUM; i ++) {
+        if(formats & format_table[i]) {
+            printf("  %s", format_msgtbl[i]);
+            if(default_format == format_table[i]) printf("(default)"); 
+            printf("\n");
+        };
+    };
+
+    /* /dev/dsp에 지원되고 있는 DSP 기능에 대해서 조사한다 */
+
+    /* DSP 기능 정보를 가져온다 */
+    if(ioctl(fd, SNDCTL_DSP_GETCAPS, &caps) == -1) {
+        perror("ioctl(SNDCTL_DSP_GETCAPS)");
+        //return -1;
+    }
+
+    printf("\nDSP capabilities\n" );
+
+    /* 가져온 기능 정보를 해석해서 표시한다 */
+    for(i = 0; i < CAPS_NUM; i ++) {
+        printf("  %s : ", caps_msgtbl[i]);
+
+        /* 리버전만 다른 것과 꺼내는 방법이 다르다 */
+        if(i == 0) 
+            printf("%d\n", (caps & DSP_CAP_REVISION));
+        else
+            printf("%s\n", ((caps & caps_table[i])!=0)?msgtbl[0]:msgtbl[1]);
+    }
+
+    close(fd);
+
+    return 0;
+}

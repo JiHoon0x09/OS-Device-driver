@@ -1,0 +1,112 @@
+ts_config.lo .libs/ts_config.o: ts_config.c ../config.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/stdlib.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/features.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/cdefs.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wordsize.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gnu/stubs.h \
+  /opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stddef.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/types.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/types.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/typesizes.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/time.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/endian.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/endian.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/select.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/select.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigset.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/time.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/sysmacros.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/pthreadtypes.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/alloca.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/stdio.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/libio.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/_G_config.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/wchar.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wchar.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gconv.h \
+  /opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stdarg.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio_lim.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sys_errlist.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/string.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/string.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/string2.h \
+  tslib-private.h tslib.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/time.h \
+  tslib-filter.h tslib.h
+
+../config.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/stdlib.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/features.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/cdefs.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wordsize.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gnu/stubs.h:
+
+/opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stddef.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/types.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/types.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/typesizes.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/time.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/endian.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/endian.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/select.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/select.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sigset.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/time.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/sysmacros.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/pthreadtypes.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/alloca.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/stdio.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/libio.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/_G_config.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/wchar.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wchar.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gconv.h:
+
+/opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stdarg.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio_lim.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sys_errlist.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/string.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/string.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/string2.h:
+
+tslib-private.h:
+
+tslib.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/time.h:
+
+tslib-filter.h:
+
+tslib.h:

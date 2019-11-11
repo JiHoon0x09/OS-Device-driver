@@ -1,0 +1,234 @@
+<<완성된 BSP에서 새로운 M2보드에  포팅하는 방법 >>
+
+
+arch/arm/mach-s3c2440/mach-mep2440.c    
+
+    229 static struct platform_device *mep2440_devices[] __initdata = {
+    230     &s3c_device_usb,
+    231     &s3c_device_lcd, --> check...!!!
+    232     &s3c_device_wdt,
+    233     &s3c_device_i2c,
+    234     &s3c_device_iis,
+    235     &mep2440_dm9k0,
+    236     &s3c_device_nand,
+    237     &s3c_device_ts 
+    238 };
+
+arch/arm/plat-s3c24xx/devs.c
+    147 /* LCD Controller */
+    148 
+    149 static struct resource s3c_lcd_resource[] = {
+    150         [0] = {
+    151                 .start = S3C24XX_PA_LCD,
+    152                 .end   = S3C24XX_PA_LCD + S3C24XX_SZ_LCD - 1,
+    153                 .flags = IORESOURCE_MEM,
+    154         },
+    155         [1] = {
+    156                 .start = IRQ_LCD,
+    157                 .end   = IRQ_LCD,
+    158                 .flags = IORESOURCE_IRQ,
+    159         }
+    160 
+    161 };
+    162 
+    163 static u64 s3c_device_lcd_dmamask = 0xffffffffUL;
+    164 
+    165 struct platform_device s3c_device_lcd = {
+    166         .name             = "s3c2410-lcd",
+    167         .id               = -1,
+    168         .num_resources    = ARRAY_SIZE(s3c_lcd_resource),
+    169         .resource         = s3c_lcd_resource,
+    170         .dev              = {
+    171                 .dma_mask               = &s3c_device_lcd_dmamask,
+    172                 .coherent_dma_mask      = 0xffffffffUL
+    173         }
+    174 };
+    175 
+    176 EXPORT_SYMBOL(s3c_device_lcd);
+    177 
+    178 void __init s3c24xx_fb_set_platdata(struct s3c2410fb_mach_info *pd)
+    179 {
+    180         struct s3c2410fb_mach_info *npd;
+    181 
+    182         npd = kmalloc(sizeof(*npd), GFP_KERNEL);
+    183         if (npd) {
+    184                 memcpy(npd, pd, sizeof(*npd));
+    185                 s3c_device_lcd.dev.platform_data = npd;
+    186         } else {
+    187                 printk(KERN_ERR "no memory for LCD platform data\n");
+    188         }
+    189 }
+
+include/asm-arm/plat-s3c24xx/devs.h 
+     25 extern struct platform_device s3c_device_lcd; --> check ...!!!
+
+
+## june90219-------------------------------------------------
+
+# S3C2440A LCD size select
+#
+choice
+        prompt "LCD select"
+        depends on FB_S3C2410
+        help
+           S3C24x0 LCD size select
+
+config FB_S3C2410_640X480
+        boolean "6.4 inch 640x480"
+        depends on FB_S3C2410
+        help
+           6.4 inch 640x480 LCD
+
+config FB_S3C2410_480X272
+        boolean "4 inch 480x272"
+        depends on FB_S3C2410
+        help
+           4 inch 480x272 LCD
+
+endchoice
+
+## june90219 ------------------------------------------------
+
+
+ [*] Backlight & LCD device support  --->                                                   x x
+  x x                    <*> Support for frame buffer devices                                                       x x
+  x x                    [*]   Enable firmware EDID                                                                 x x
+  x x                    [*]   Enable Video Mode Handling Helpers                                                   x x
+  x x                    [ ]   Enable Tile Blitting Support                                                         x x
+  x x                    ---   Frame buffer hardware drivers                                                        x x
+  x x                    < >   Epson S1D13XXX framebuffer support                                                   x x
+  x x                    <*> S3C2410 LCD framebuffer support                                                        x x
+  x x                          LCD select (4 inch 480x272)  --->                                                    x x
+  x x                    [ ]   S3C2410 lcd debug messages                                                           x x
+  x x                    < > Virtual Frame Buffer support (ONLY FOR TESTING!)                                       x x
+  x x                        Console display driver support  --->                                                   x x
+  x x                        Logo configuration  ---> (NEW) 
+
+                          x x                      ( ) 6.4 inch 640x480                      x x
+                          x x                      (X) 4 inch 480x272                        x x
+                          x x                                             
+
+
+
+ 
+
+arch/arm/mach-s3c2440/mach-mep2440.c 
+//june90219--------------------------------------------------------------------
+	//LCD FrameBuffer 
+	s3c24xx_fb_set_platdata(&mep2440_lcdcfg);
+
+// june90219 : LCD ----------------------------------------------------------------
+
+#if defined( CONFIG_FB_S3C2410_640X480 )
+
+static struct s3c2410fb_mach_info mep2440_lcdcfg __initdata = {
+	.fixed_syncs = 1,
+	
+	.width       =	640,
+	.height      =	480,
+
+	.xres=		{640,640,640},
+	.yres=		{480,480,480},
+	.bpp=		{16,16,16},
+	
+	
+	.regs={ 
+		.lcdcon1=	S3C2410_LCDCON1_TFT16BPP | \
+				S3C2410_LCDCON1_TFT | \
+				S3C2410_LCDCON1_CLKVAL(4),
+		
+		.lcdcon2=	S3C2410_LCDCON2_VBPD(1) | \
+				S3C2410_LCDCON2_LINEVAL(480-1) | \
+				S3C2410_LCDCON2_VFPD(2) | \
+				S3C2410_LCDCON2_VSPW(1),
+				  
+		.lcdcon3=	S3C2410_LCDCON3_HBPD(6) | \
+				S3C2410_LCDCON3_HOZVAL(640-1) | \
+				S3C2410_LCDCON3_HFPD(2),
+				  
+		.lcdcon4= 	S3C2410_LCDCON4_HSPW(4),
+		
+		.lcdcon5=	S3C2410_LCDCON5_FRM565 | \
+				S3C2410_LCDCON5_INVVLINE | \
+				S3C2410_LCDCON5_INVVFRAME | \
+				S3C2410_LCDCON5_HWSWP,
+	},
+	.lpcsel=	0xE0,
+	
+	.gpccon     =	0xAAAA56A9,
+	.gpccon_mask=	0xffffffff,
+	.gpcup      =	0x0000ffff,
+	.gpcup_mask =	0xffffffff,
+	.gpdcon     =	0xaaaaaaaa,
+	.gpdcon_mask=	0xffffffff,
+	.gpdup      =	0x0000ffff,
+	.gpdup_mask =	0xffffffff,
+
+};
+#elif defined( CONFIG_FB_S3C2410_480X272 )
+#define H_FP	1		/* front porch */
+#define H_SW	40		/* Hsync width  */
+#define H_BP	1		/* Back porch */
+
+#define V_FP	1		/* front porch */
+#define V_SW	9		/* Vsync width */
+#define V_BP	1		/* Back porch */
+
+#define H_RESOLUTION	480	/* x resolition */
+#define V_RESOLUTION	272	/* y resolution  */
+#define VFRAME_FREQ     60	/* frame rate freq. */
+
+#define LCD_PIXEL_CLOCK (VFRAME_FREQ *(H_FP+H_SW+H_BP+H_RESOLUTION) * (V_FP+V_SW+V_BP+V_RESOLUTION))
+#define PIXEL_CLOCK     (VFRAME_FREQ * LCD_PIXEL_CLOCK)	/*  vclk = frame * pixel_count */
+#define PIXEL_BPP       16	/*  RGB 5-6-5 format for SMDK24A0 EVAL BOARD */
+
+
+static struct s3c2410fb_mach_info mep2440_lcdcfg __initdata = {
+	.fixed_syncs = 1,
+	.width       =	H_RESOLUTION,
+	.height      =	V_RESOLUTION,
+
+	.xres=		{H_RESOLUTION, H_RESOLUTION, H_RESOLUTION},
+	.yres=		{V_RESOLUTION, V_RESOLUTION, V_RESOLUTION},
+	.bpp=		{PIXEL_BPP, PIXEL_BPP, PIXEL_BPP},
+	
+	
+	.regs={ 
+		.lcdcon1=	S3C2410_LCDCON1_TFT16BPP | \
+				S3C2410_LCDCON1_TFT | \
+				S3C2410_LCDCON1_CLKVAL(6),
+		
+		.lcdcon2=	S3C2410_LCDCON2_VBPD(V_BP) | \
+				S3C2410_LCDCON2_LINEVAL(V_RESOLUTION-1) | \
+				S3C2410_LCDCON2_VFPD(V_FP) | \
+				S3C2410_LCDCON2_VSPW(V_SW),
+				  
+		.lcdcon3=	S3C2410_LCDCON3_HBPD(H_BP) | \
+				S3C2410_LCDCON3_HOZVAL(H_RESOLUTION-1) | \
+				S3C2410_LCDCON3_HFPD(H_FP),
+				  
+		.lcdcon4= 	S3C2410_LCDCON4_HSPW(H_SW),
+		
+		.lcdcon5=	S3C2410_LCDCON5_FRM565 | \
+				S3C2410_LCDCON5_INVVLINE | \
+				S3C2410_LCDCON5_INVVFRAME | \
+				S3C2410_LCDCON5_HWSWP,
+	},
+	.lpcsel=	0xE0,
+	
+	.type		= S3C2410_LCDCON1_TFT16BPP,
+	
+	
+	.gpccon     =	0xAAAA02A8,
+	.gpccon_mask=	0xffffffff,
+	.gpcup      =	0x0000FF1E,
+	.gpcup_mask =	0xffffffff,
+	.gpdcon     =	0xaaaaaaaa,
+	.gpdcon_mask=	0xffffffff,
+	.gpdup      =	0x0000ffff,
+	.gpdup_mask =	0xffffffff,
+
+};
+#endif
+
+root@mdsedu-desktop:/work/linux/linux-2.6.21# make uImage

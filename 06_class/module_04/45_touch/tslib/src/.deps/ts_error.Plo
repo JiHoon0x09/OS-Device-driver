@@ -1,0 +1,54 @@
+ts_error.lo .libs/ts_error.o: ts_error.c ../config.h \
+  /opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stdarg.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/stdio.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/features.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/cdefs.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wordsize.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gnu/stubs.h \
+  /opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stddef.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/types.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/typesizes.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/libio.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/_G_config.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/wchar.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wchar.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gconv.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio_lim.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sys_errlist.h \
+  /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio.h
+
+../config.h:
+
+/opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stdarg.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/stdio.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/features.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/sys/cdefs.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wordsize.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gnu/stubs.h:
+
+/opt/4.2.4-arm/lib/gcc/arm-generic-linux-gnu/4.2.4/include/stddef.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/types.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/typesizes.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/libio.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/_G_config.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/wchar.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/wchar.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/gconv.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio_lim.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/sys_errlist.h:
+
+/opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/usr/include/bits/stdio.h:

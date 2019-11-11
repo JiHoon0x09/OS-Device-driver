@@ -1,0 +1,118 @@
+<<완성된 BSP에서 새로운 M2보드에  포팅하는 방법 >>
+
+
+arch/arm/mach-s3c2440/mach-mep2440.c    
+
+    229 static struct platform_device *mep2440_devices[] __initdata = {
+    230     &s3c_device_usb,
+    231     &s3c_device_lcd,
+    232     &s3c_device_wdt,
+    233     &s3c_device_i2c,
+    234     &s3c_device_iis,
+    235     &mep2440_dm9k0,
+    236     &s3c_device_nand,
+    237     &s3c_device_ts --> 추가
+    238 };
+
+arch/arm/plat-s3c24xx/devs.c
+     33 #include <asm/arch/ts.h>            // june90212
+    601 /* Touchscreen */
+    602 
+    603 struct platform_device s3c_device_ts = {
+    604     .name         = "s3c2410-ts",
+    605     .id       = -1,
+    606 };
+    607         
+    608 EXPORT_SYMBOL(s3c_device_ts);
+    609         
+    610 static struct s3c2410_ts_mach_info s3c2410ts_info;
+    611         
+    612 void __init set_s3c2410ts_info(struct s3c2410_ts_mach_info *hard_s3c2410ts_info)
+    613 {   
+    614     memcpy(&s3c2410ts_info,hard_s3c2410ts_info,sizeof(struct s3c2410_ts_mach_info));
+    615     s3c_device_ts.dev.platform_data = &s3c2410ts_info;
+    616                 
+    617 }                   
+    618 EXPORT_SYMBOL(set_s3c2410ts_info);
+
+include/asm-arm/plat-s3c24xx/devs.h 
+    52 extern struct platform_device s3c_device_ts;
+
+root@mdsedu-desktop:/work/M2_BSP/linux-2.6.21-mep2440# cd drivers/input/touchscreen/
+root@mdsedu-desktop:/work/M2_BSP/linux-2.6.21-mep2440/drivers/input/touchscreen# ls
+ads7846.c   corgi_ts.c  gunze.c           hp680_ts_input.c  Makefile  mtouch.c    s3c2410_ts.c  touchright.c  ucb1400_ts.c
+built-in.o  elo.c       h3600_ts_input.c  Kconfig           mk712.c   penmount.c  s3c2410_ts.o  touchwin.c
+root@mdsedu-desktop:/work/M2_BSP/linux-2.6.21-mep2440/drivers/input/touchscreen# cp -a s3c2410_ts.c /work/linux/linux-2.6.21/drivers/input/touchscreen/
+
+root@mdsedu-desktop:/work/linux/linux-2.6.21/drivers/input/touchscreen# 
+Makefile
+     21 obj-$(CONFIG_TOUCHSCREEN_S3C2410) += s3c2410_ts.o
+
+Kconfig
+     57 ##june90212----------------------------------------------
+     58 
+     59 config TOUCHSCREEN_S3C2410
+     60     tristate "Samsung S3C2410 touchscreen input driver"
+     61     depends on ARCH_S3C2410 && INPUT && INPUT_TOUCHSCREEN
+     62     select SERIO
+     63         help
+     64           Say Y here if you have the s3c2410 touchscreen.
+     65 
+     66           If unsure, say N.
+     67 
+     68           To compile this driver as a module, choose M here: the
+     69           module will be called s3c2410_ts.
+     70 
+     71 config TOUCHSCREEN_S3C2410_DEBUG
+     72     boolean "Samsung S3C2410 touchscreen debug messages"
+     73     depends on TOUCHSCREEN_S3C2410
+     74     help:wq
+     75       Select this if you want debug messages
+     76 ##--------------------------------------------------------
+
+
+  x x                   --- Generic input layer (needed for keyboard, mouse, ...)                                 x x
+  x x                   < >   Support for memoryless force-feedback devices                                       x x
+  x x                   ---   Userland interfaces                                                                 x x
+  x x                   ---   Mouse interface                                                                     x x
+  x x                   [*]     Provide legacy /dev/psaux device                                                  x x
+  x x                   (1024)  Horizontal screen resolution                                                      x x
+  x x                   (768)   Vertical screen resolution                                                        x x
+  x x                   < >   Joystick interface                                                                  x x
+  x x                   <*>   Touchscreen interface                                                               x x
+  x x                   (480)   Horizontal screen resolution                                                      x x
+  x x                   (272)   Vertical screen resolution                                                        x x
+  x x                   < >   Event interface                                                                     x x
+  x x                   < >   Event debugging                                                                     x x
+  x x                   ---   Input Device Drivers                                                                x x
+  x x                   [ ]   Keyboards  --->                                                                     x x
+  x x                   [ ]   Mouse  --->                                                                         x x
+  x x                   [ ]   Joysticks  --->   
+  x x                   [*]   Touchscreens  --->                                                                  x x
+  x x                   [ ]   Miscellaneous devices  --->                                                         x x
+  x x                       Hardware I/O ports  --->                                                                   x x
+
+ x                   --- Touchscreens                                                                          x x
+  x x                   <*>   Samsung S3C2410 touchscreen input driver                                            x x
+  x x                   [ ]     Samsung S3C2410 touchscreen debug messages (NEW)                                  x x
+  x x                   < >   Gunze AHL-51S touchscreen (NEW) 
+
+root@mdsedu-desktop:/work/linux/linux-2.6.21# make uImage
+
+root@mdsedu-desktop:/work/M2_BSP/linux-2.6.21-mep2440/include/asm-arm/arch-s3c2410# cp -a ts.h /work/linux/linux-2.6.21/include/asm-arm/arch-s3c2410/
+   
+
+arch/arm/mach-s3c2440/mach-mep2440.c 
+     41 #include <asm/arch/ts.h> //june90212
+
+     55 //touchscreen initdata : june90212
+     56 static struct s3c2410_ts_mach_info mep2440_ts_cfg __initdata = {
+     57     .delay = 10000,
+     58     .presc  = 49,
+     59     .oversampling_shift = 2,
+     60 };
+
+void __init mep2440_init(void) 함수 내에서
+set_s3c2440ts_info(&mep2440_ts_cfg); // add
+
+line 삭제 

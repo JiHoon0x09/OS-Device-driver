@@ -1,0 +1,6 @@
+rm -rf keysample_app
+arm-generic-linux-gnu-gcc -o keysample_app keysample_app.c
+#arm-linux-gcc -o keysample_app rebis_key_touch.c
+
+cp -ra keysample_app /opt/4.2.4-arm/arm-generic-linux-gnu/sys-root/root/
+#cp -ra keysample_app /work/rootfs_nfs/root/
